@@ -1,0 +1,20 @@
+{
+  "name": "中庄調節池單車計畫",
+  "short_name": "單車計畫",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b0f19",
+  "icons": [
+    {
+      "src": "img/basin.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/wetland.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
