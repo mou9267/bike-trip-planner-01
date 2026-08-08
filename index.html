@@ -422,6 +422,107 @@
             font-size: 0.75rem;
             cursor: pointer;
         }
+
+        /* 使用說明彈窗 */
+        .help-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .help-modal.hidden {
+            display: none;
+        }
+
+        .help-card {
+            width: 100%;
+            max-width: 26rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 1.25rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .help-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .help-card-header h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .help-close-btn {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text);
+            font-size: 1rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .help-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .help-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .help-icon {
+            width: 2rem;
+            height: 2rem;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .help-item h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .help-item p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .help-note {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -435,6 +536,9 @@
         </button>
         <button id="btn-reset" class="ctrl-btn" title="重設地圖">
             <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+        </button>
+        <button id="btn-help" class="ctrl-btn" title="使用說明">
+            <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
         </button>
     </div>
 
@@ -491,6 +595,40 @@
                 <div class="food-list" id="cafes-container">
                     <!-- JS 動態生成 -->
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用說明彈窗 -->
+    <div id="help-modal" class="help-modal hidden">
+        <div class="help-card">
+            <div class="help-card-header">
+                <h2>如何使用</h2>
+                <button id="help-close-btn" class="help-close-btn" title="關閉">✕</button>
+            </div>
+            <div class="help-item">
+                <div class="help-icon">🗺️</div>
+                <div>
+                    <h4>地圖操作</h4>
+                    <p>拖曳、縮放檢視全程路線；左上角可切換 Google 道路／衛星／OpenStreetMap 圖層。橘色動態虛線是路線，橘色大頭針是景點、紅色大頭針是美食/咖啡廳，點擊可看簡介並一鍵開啟 Google 地圖導航。</p>
+                </div>
+            </div>
+            <div class="help-item">
+                <div class="help-icon">📍</div>
+                <div>
+                    <h4>右上角按鈕</h4>
+                    <p>「我的位置」開始／停止 GPS 即時定位追蹤，會以藍點顯示目前位置；「重設地圖」可將視角重新對齊整條路線。</p>
+                </div>
+            </div>
+            <div class="help-item">
+                <div class="help-icon">📋</div>
+                <div>
+                    <h4>底部抽屜</h4>
+                    <p>點擊或向上滑動標題列展開，可切換「行程進度」「精彩景點」「老街補給」三個分頁；點擊景點卡片可跳到地圖上對應位置，點擊「導航」開啟 Google 地圖導航。</p>
+                </div>
+            </div>
+            <div class="help-note">
+                提醒：GPS 定位僅能在 HTTPS 連線或 localhost 環境下運作，這是瀏覽器的安全性限制。若以本機檔案開啟，建議部署到 GitHub Pages 等 HTTPS 靜態網站服務後再使用定位功能。
             </div>
         </div>
     </div>
@@ -1904,6 +2042,32 @@
             if (window.BIKE_ROUTE_DATA && window.BIKE_ROUTE_DATA.food) {
                 renderFoodItems(eatsContainer, window.BIKE_ROUTE_DATA.food.eats);
                 renderFoodItems(cafesContainer, window.BIKE_ROUTE_DATA.food.cafes);
+            }
+
+            // 使用說明彈窗
+            const btnHelp = document.getElementById('btn-help');
+            const helpModal = document.getElementById('help-modal');
+            const helpCloseBtn = document.getElementById('help-close-btn');
+
+            const showHelp = () => helpModal && helpModal.classList.remove('hidden');
+            const hideHelp = () => {
+                if (helpModal) helpModal.classList.add('hidden');
+                localStorage.setItem('bikeGuideSeen', '1');
+            };
+
+            if (btnHelp) {
+                btnHelp.addEventListener('click', showHelp);
+            }
+            if (helpCloseBtn) {
+                helpCloseBtn.addEventListener('click', hideHelp);
+            }
+            if (helpModal) {
+                helpModal.addEventListener('click', (e) => {
+                    if (e.target === helpModal) hideHelp();
+                });
+            }
+            if (!localStorage.getItem('bikeGuideSeen')) {
+                showHelp();
             }
 
             // 抽屜拉伸功能
